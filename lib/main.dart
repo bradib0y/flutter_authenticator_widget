@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'authenticator.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,7 +9,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
-
 
   final String title;
 
@@ -35,6 +34,19 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  bool _isAuthenticated;
+
+  void _onAuthenticated(bool value) {
+    setState(() {
+      _isAuthenticated = value;
+    });
+  }
+
+  @override
+  void initState() {
+    _isAuthenticated = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,6 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Authenticator(onAuthenticated: _onAuthenticated),
+            Text("Logged in: $_isAuthenticated"),
             Text(
               'You have pushed the button this many times:',
             ),
@@ -61,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
-      ), 
+      ),
     );
   }
 }
